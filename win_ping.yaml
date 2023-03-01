@@ -1,7 +1,7 @@
 ---
 - name: win_ping module test
   hosts: all
-  become: true
+  become: false
   tasks:
     - name: test connection
       win_ping:
