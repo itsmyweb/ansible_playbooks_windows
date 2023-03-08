@@ -12,7 +12,7 @@
         url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/{{item}}
         dest: C:\Temp\{{item}}
         force: no
-      when: windows_version.stdout == 10
+#      when: windows_version.stdout == 10
       with_items:
         - SetupClient.exe
         - tanium-init.dat
