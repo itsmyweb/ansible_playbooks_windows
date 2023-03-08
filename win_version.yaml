@@ -3,8 +3,8 @@
   tasks:
     - name: Get Windows version
       win_shell: "[System.Environment]::OSVersion.Version.Major"
-      register: windows_version
+      register: windows_version.stdout | trim
 
     - name: Print Windows host information
       debug:
-        msg: "{{ windows_version.stdout | trim }}"
+        msg: "{{ windows_version }}"
