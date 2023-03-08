@@ -2,10 +2,9 @@
 - hosts: all
   tasks:
     - name: Get Windows version
-      win_shell: "systeminfo /fo csv | ConvertFrom-Csv | select \"OS Version\" | Format-List"
+      win_shell: "[System.Environment]::OSVersion.Version.Major"
       register: windows_version
 
     - name: Print Windows host information
       debug:
         msg: "{{ windows_version }}"
-      when: windows_version == "10.0.17763 N/A Build 17763"
