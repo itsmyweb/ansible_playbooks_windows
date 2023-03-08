@@ -1,0 +1,13 @@
+---
+- name: Install Tanium
+  hosts: all
+
+  tasks:
+    - name: Download Tanium package
+      win_get_url:
+        url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/{{item}}
+        dest: C:\Temp\{{item}}
+        force: no
+      with_items:
+        - SetupClient.exe
+        - tanium-init.dat
