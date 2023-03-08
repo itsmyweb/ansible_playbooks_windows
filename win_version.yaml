@@ -8,3 +8,5 @@
     - name: Print Windows host information
       debug:
         msg: "{{ windows_version }}"
+        when:
+          - windows_version == "10.0.17763"
