@@ -7,4 +7,4 @@
 
     - name: Print Windows host information
       debug:
-        msg: "{{ windows_version.stdout }}"
+        msg: "{{ windows_version.stdout | trim }}"
