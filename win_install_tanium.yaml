@@ -32,4 +32,5 @@
         arguments: 
         - /install
         - /Q
+        product_id: none
       when: file_data.stat.exists
