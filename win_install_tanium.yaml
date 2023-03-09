@@ -7,6 +7,10 @@
       win_shell: "[System.Environment]::OSVersion.Version.Major"
       register: windows_version
 
+    - name: Print Windows version
+      debug:
+        msg: "{{ windows_version.stdout }}"
+
     - name: Download Tanium package
       win_get_url:
         url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/{{item}}
