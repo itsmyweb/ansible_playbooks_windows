@@ -22,7 +22,7 @@
         - tanium-init.dat
 
     - name: Check if tanium exe exists
-      stat:
+      win_stat:
         path: C:\Temp\SetupClient.exe
       register: file_data
 
