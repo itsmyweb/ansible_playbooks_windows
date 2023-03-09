@@ -20,3 +20,16 @@
       with_items:
         - SetupClient.exe
         - tanium-init.dat
+
+    - name: Check if tanium exe exists
+      stat:
+        path: C:\Temp\SetupClient.exe
+      register: file_data
+
+    - name: Install Tanium exe
+      win_package:
+        path: C:\Temp\SetupClient.exe
+        arguments: 
+        - /install
+        - /Q
+      when: file_data.stat.exists
