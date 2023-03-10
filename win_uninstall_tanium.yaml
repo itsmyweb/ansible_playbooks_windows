@@ -14,6 +14,21 @@
         - set-service-permissions-back-to-default.vbs
         - reset_directory_permissions.vbs
 
-# - name: Powershell commands to uninstall Tanium
-#   win_shell: |
-#     get-service 'LanmanServer' | Where {$_.Status -ne 'Running'} | start-service
+- name: Powershell commands to uninstall Tanium
+  win_shell: |
+    get-service 'LanmanServer' | Where {$_.Status -ne 'Running'} | start-service
+    rename "C:\\Temp\\tanium.exe" "NotPSExec.exe"
+    reg delete "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\psexec.exe" /f
+    reg delete "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\psexesvc.exe" /f
+    cd C:\\Temp
+    NotPsExec.exe /s /accepteula cscript.exe C:\\Temp\\set-service-permissions-back-to-default.vbs
+    NotPsExec.exe /s /accepteula cscript.exe C:\\Temp\\show-client-in-add-remove-programs.vbs
+    NotPsExec.exe /s /accepteula cscript.exe C:\\Temp\\reset_directory_permissions.vbs
+
+    $uninstall = (Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Tanium Client').UninstallString;
+    if ($uninstall) {
+       Start-Process -FilePath $uninstall /qn -Wait -PassThru -NoNewWindow; Start-Sleep -s 120;
+       $delete = 'C:\\Program Files (x86)\\Tanium','C:\\chef\\cache\\package\\SetupClient.exe', 'C:\\chef\\cache\\package\\tanium-init.dat';
+       foreach ($path in $delete) {
+               if (Test-path -Path $path) {
+                  Remove-Item -Recurse -Force $path };};Start-Sleep -s 120;};
