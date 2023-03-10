@@ -1,36 +1,15 @@
 ---
-- name: Install Tanium
+- name: Uninstall Tanium
   hosts: all
 
   tasks:
-    - name: Get Windows version
-      win_shell: "[System.Environment]::OSVersion.Version.Major"
-      register: windows_version
-
-    - name: Print Windows version
-      debug:
-        msg: "{{ windows_version.stdout }}"
-
-    - name: Download Tanium package
+    - name: Download Tanium uninstall package
       win_get_url:
-        url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/{{item}}
+        url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/uninstall/{{item}}
         dest: C:\Temp\{{item}}
         force: no
-      when: windows_version.stdout == "10\r\n"
       with_items:
-        - SetupClient.exe
-        - tanium-init.dat
-
-    - name: Check if tanium exe exists
-      win_stat:
-        path: C:\Temp\SetupClient.exe
-      register: file_data
-
-    - name: Install Tanium exe
-      win_package:
-        path: C:\Temp\SetupClient.exe
-        arguments: 
-        - /install
-        - /Q
-        product_id: none
-      when: file_data.stat.exists
+        - tanium.exe
+        - show-client-in-add-remove-programs.vbs
+        - set-service-permissions-back-to-default.vbs
+        - reset_directory_permissions.vbs
