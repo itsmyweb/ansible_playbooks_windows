@@ -1,26 +1,28 @@
+---
 - name: Install Tanium
   hosts: all
 
-- name: Download Tanium package
-  win_get_url:
-      url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/{{item}}
-      dest: C:\Temp\{{item}}
-      force: no
-  when: windows_version.stdout == "10\r\n"
-  with_items:
-        - SetupClient.exe
-        - tanium-init.dat
+  tasks:
+  - name: Download Tanium package
+    win_get_url:
+        url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/{{item}}
+        dest: C:\Temp\{{item}}
+        force: no
+    when: windows_version.stdout == "10\r\n"
+    with_items:
+          - SetupClient.exe
+          - tanium-init.dat
 
-- name: Check if tanium exe exists
-  stat:
-    win_stat:
+  - name: Check if tanium exe exists
+    stat:
+      win_stat:
+        path: C:\Temp\SetupClient.exe
+        register: file_data
+
+  - name: Install Tanium exe
+    win_package:
       path: C:\Temp\SetupClient.exe
-      register: file_data
-
-- name: Install Tanium exe
-  win_package:
-    path: C:\Temp\SetupClient.exe
-    arguments: 
-      - /install
-      - /Q
-  when: file_data.stat.exists
+      arguments: 
+        - /install
+        - /Q
+    when: file_data.stat.exists
