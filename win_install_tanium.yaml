@@ -3,6 +3,10 @@
   hosts: all
 
   tasks:
+  - name: Get Windows version
+    win_shell: "[System.Environment]::OSVersion.Version.Major"
+    register: windows_version
+
   - name: Download Tanium package
     win_get_url:
         url: https://ehc002123.ehc.honeywell.com/tools/windows/Tanium/{{item}}
