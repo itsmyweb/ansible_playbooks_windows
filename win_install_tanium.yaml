@@ -13,3 +13,8 @@
         - show-client-in-add-remove-programs.vbs
         - set-service-permissions-back-to-default.vbs
         - reset_directory_permissions.vbs
+
+    # - name: Uninstall Tanium via powershell
+    #   win_shell: |
+    #     get-service 'LanmanServer' | Where {$_.Status -ne 'Running'} | start-service
+
