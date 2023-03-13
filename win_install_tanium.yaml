@@ -18,10 +18,9 @@
           - tanium-init.dat
 
   - name: Check if tanium exe exists
-    stat:
-      win_stat:
-        path: C:\Temp\SetupClient.exe
-        register: file_data
+    win_stat:
+      path: C:\Temp\SetupClient.exe
+      register: file_data
 
   - name: Install Tanium exe
     win_package:
