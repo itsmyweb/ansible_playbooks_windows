@@ -20,7 +20,7 @@
   - name: Check if tanium exe exists
     win_stat:
       path: C:\Temp\SetupClient.exe
-      register: file_data
+    register: file_data
 
   - name: Install Tanium exe
     win_package:
