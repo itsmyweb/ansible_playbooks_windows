@@ -25,6 +25,7 @@
   - name: Install Tanium exe
     win_package:
       path: C:\Temp\SetupClient.exe
+      product_id: none
       arguments: 
         - /install
         - /Q
